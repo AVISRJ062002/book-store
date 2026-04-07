@@ -1,4 +1,5 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const links = [
   { to: "/", label: "Home" },
@@ -8,6 +9,8 @@ const links = [
 ];
 
 export function SiteShell() {
+  const { itemCount } = useCart();
+
   return (
     <div className="app-shell">
       <div className="ambient ambient-one" />
@@ -35,6 +38,10 @@ export function SiteShell() {
               {link.label}
             </NavLink>
           ))}
+          <NavLink to="/cart" className={({ isActive }) => (isActive ? "nav-link active cart-link" : "nav-link cart-link")}>
+            Cart
+            <span className="nav-link__count">{itemCount}</span>
+          </NavLink>
         </nav>
       </header>
 
@@ -50,7 +57,7 @@ export function SiteShell() {
         <div className="footer-grid">
           <span>AWS serverless frontend and API</span>
           <span>React multi-page reading experience</span>
-          <span>Search-driven catalog powered by Open Library</span>
+          <span>Search-driven catalog with a persistent local cart</span>
         </div>
       </footer>
     </div>

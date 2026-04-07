@@ -5,6 +5,7 @@ This project provisions a production-oriented, zero-EC2 bookstore platform on AW
 - React frontend on private S3 behind CloudFront
 - HTTP API Gateway for low-cost APIs
 - Public Lambda for searchable book catalog, collections, and book detail APIs
+- Persistent React cart flow with a dedicated cart page
 - Private worker Lambda for scheduled/background jobs and secure RDS access
 - PostgreSQL on Amazon RDS in private subnets
 - Optional ECS Fargate path for heavier Spring Boot workloads
@@ -62,6 +63,7 @@ npm run build
 aws s3 sync .\dist "s3://<frontend-bucket-name>" --delete
 ```
 
+- The React storefront now includes a dedicated `/cart` page with browser-persistent cart storage so shoppers can add titles from the catalog and review their selections later.
 - If you want a branded HTTPS domain, set `custom_domain_name` and `route53_zone_id` in `terraform.tfvars`. The CloudFront module will request and validate an ACM certificate in `us-east-1`.
 - If you want the Spring Boot path, set `enable_fargate = true`, build the image from `springboot-app/Dockerfile`, push it to the output ECR repository, then increase `fargate_desired_count` from `0`.
 - The architecture intentionally avoids NAT Gateway charges. Public internet access is handled by CloudFront and the public Lambda, while private workloads use VPC endpoints to reach AWS services.

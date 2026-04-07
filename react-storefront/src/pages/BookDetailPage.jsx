@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BookCard } from "../components/BookCard";
 import { LoadingPanel } from "../components/LoadingPanel";
+import { useCart } from "../context/CartContext";
 import { fetchBookDetail, fetchCatalog } from "../lib/api";
+import { formatCurrency, getBookListPriceCents, getBookPriceCents } from "../lib/pricing";
 
 export function BookDetailPage() {
   const { workId } = useParams();
+  const { addItem, getQuantity } = useCart();
   const [detail, setDetail] = useState(null);
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,6 +58,10 @@ export function BookDetailPage() {
     return <p className="error-banner">{error || "Book detail could not be loaded."}</p>;
   }
 
+  const quantityInCart = getQuantity(detail.work_id);
+  const priceCents = getBookPriceCents(detail);
+  const listPriceCents = getBookListPriceCents(detail);
+
   return (
     <div className="page-stack">
       <section className="detail-hero">
@@ -88,6 +95,25 @@ export function BookDetailPage() {
               <span>{detail.subjects?.slice(0, 3).join(", ") || "General reading"}</span>
             </div>
           </div>
+
+          <div className="purchase-panel">
+            <div>
+              <span className="eyebrow-pill subtle">Store offer</span>
+              <div className="purchase-price">{formatCurrency(priceCents)}</div>
+              <p className="purchase-compare">Curated shelf price against list {formatCurrency(listPriceCents)}</p>
+            </div>
+
+            <div className="purchase-links">
+              <button type="button" className="primary-link purchase-button" onClick={() => addItem(detail)}>
+                {quantityInCart ? "Add another copy" : "Add to cart"}
+              </button>
+              <Link to="/cart" className="secondary-link">
+                Open cart
+              </Link>
+            </div>
+          </div>
+
+          {quantityInCart ? <p className="cart-inline-note">{quantityInCart} {quantityInCart === 1 ? "copy is" : "copies are"} currently in your cart.</p> : null}
         </div>
       </section>
 

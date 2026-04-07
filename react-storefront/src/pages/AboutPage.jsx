@@ -17,7 +17,7 @@ export function AboutPage() {
           <h2>What changed</h2>
           <p>
             The original one-page sample is now a true multi-page React application with a richer catalog, themed
-            collections, book detail views, and a more polished editorial look.
+            collections, book detail views, a dedicated cart page, and a more polished editorial look.
           </p>
         </article>
         <article className="about-card">
@@ -31,7 +31,7 @@ export function AboutPage() {
           <h2>Why it scales</h2>
           <p>
             The frontend is static, the API is event-driven, and the database and background worker stay available for
-            future account, cart, and order features without introducing EC2.
+            future account and order features without introducing EC2.
           </p>
         </article>
       </section>
@@ -41,12 +41,12 @@ export function AboutPage() {
           <span className="eyebrow-pill subtle">Next chapter</span>
           <h2>Ready for more features</h2>
           <p>
-            This layout is ready for customer authentication, wishlists, cart flows, admin inventory, and richer book
-            metadata whenever you want to keep growing the store.
+            The storefront now supports a persistent local cart and is ready for customer authentication, wishlists,
+            checkout, admin inventory, and richer book metadata whenever you want to keep growing the store.
           </p>
         </div>
-        <Link to="/catalog" className="primary-link">
-          Explore the catalog
+        <Link to="/cart" className="primary-link">
+          Visit your cart
         </Link>
       </section>
     </div>
