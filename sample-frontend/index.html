@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookstore</title>
+    <style>
+      :root {
+        --ink: #18222f;
+        --paper: #f7f0e4;
+        --accent: #bf5b2c;
+        --accent-dark: #8f3f1c;
+        --forest: #385548;
+        --card: rgba(255, 255, 255, 0.86);
+        --line: rgba(24, 34, 47, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(191, 91, 44, 0.2), transparent 32%),
+          radial-gradient(circle at bottom right, rgba(56, 85, 72, 0.18), transparent 28%),
+          linear-gradient(135deg, #f3e6d0, #f9f4ec 45%, #efe5d7);
+        min-height: 100vh;
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 48px;
+      }
+
+      .hero {
+        background: linear-gradient(140deg, rgba(255, 248, 239, 0.92), rgba(255, 255, 255, 0.74));
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 22px 70px rgba(24, 34, 47, 0.12);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(191, 91, 44, 0.12);
+        color: var(--accent-dark);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 16px 0 12px;
+        font-size: clamp(2.4rem, 5vw, 4.9rem);
+        line-height: 0.96;
+        max-width: 10ch;
+      }
+
+      .lead {
+        max-width: 60ch;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 22px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .button {
+        appearance: none;
+        border: none;
+        border-radius: 999px;
+        padding: 13px 18px;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .button.primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .button.secondary {
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .meta-card,
+      .book,
+      .api-panel {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: 0 12px 30px rgba(24, 34, 47, 0.08);
+      }
+
+      .meta-card {
+        padding: 16px 18px;
+      }
+
+      .meta-card strong,
+      .api-panel strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.86rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--forest);
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 12px;
+        margin: 34px 0 14px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(1.4rem, 2vw, 2rem);
+      }
+
+      .books {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+
+      .book {
+        padding: 18px;
+      }
+
+      .book .genre {
+        color: var(--accent-dark);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .book h3 {
+        margin: 10px 0 8px;
+        font-size: 1.25rem;
+      }
+
+      .book p {
+        margin: 0 0 12px;
+        line-height: 1.6;
+      }
+
+      .price {
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .api-panel {
+        margin-top: 28px;
+        padding: 18px;
+      }
+
+      pre {
+        margin: 12px 0 0;
+        padding: 14px;
+        overflow: auto;
+        border-radius: 16px;
+        background: #13202d;
+        color: #eff8ff;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: min(100% - 20px, 1120px);
+          padding-top: 20px;
+        }
+
+        .hero {
+          padding: 22px;
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <span class="eyebrow">Serverless Bookstore</span>
+        <h1>Pages worth staying up for.</h1>
+        <p class="lead">
+          A lightweight, scalable storefront delivered through CloudFront and backed by AWS managed services only.
+          This sample page was published automatically after Terraform provisioned the stack.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#catalog">Browse picks</a>
+          <button class="button secondary" id="loadBooks">Load live API books</button>
+        </div>
+        <div class="meta">
+          <article class="meta-card">
+            <strong>Frontend</strong>
+            <span>S3 + CloudFront HTTPS delivery</span>
+          </article>
+          <article class="meta-card">
+            <strong>Backend</strong>
+            <span>HTTP API Gateway + AWS Lambda</span>
+          </article>
+          <article class="meta-card">
+            <strong>Database</strong>
+            <span>Amazon RDS PostgreSQL in private subnets</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="catalog">
+        <div class="section-head">
+          <h2>Curated shelf</h2>
+          <span>Thoughtful engineering, infrastructure, and product reads.</span>
+        </div>
+        <div class="books">
+          <article class="book">
+            <div class="genre">Infrastructure</div>
+            <h3>Terraform: Up & Running</h3>
+            <p>Practical infrastructure as code patterns for teams building reliable cloud platforms.</p>
+            <div class="price">$29</div>
+          </article>
+          <article class="book">
+            <div class="genre">Architecture</div>
+            <h3>Designing Data-Intensive Applications</h3>
+            <p>A modern systems design classic for distributed apps, storage, and streaming data.</p>
+            <div class="price">$34</div>
+          </article>
+          <article class="book">
+            <div class="genre">Engineering</div>
+            <h3>Clean Architecture</h3>
+            <p>Domain-driven boundaries and maintainable application structure for long-lived codebases.</p>
+            <div class="price">$26</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="api-panel">
+        <strong>Live API response</strong>
+        <div>This panel calls the deployed Lambda-backed HTTP API and renders the JSON response below.</div>
+        <pre id="apiOutput">Click "Load live API books" to fetch from the deployed endpoint.</pre>
+      </section>
+    </main>
+
+    <script>
+      const output = document.getElementById("apiOutput");
+      const button = document.getElementById("loadBooks");
+      const apiBase = "__API_ENDPOINT__";
+      const apiConfigured = !apiBase.startsWith("__");
+
+      async function loadBooks() {
+        if (!apiConfigured) {
+          output.textContent = "API endpoint not configured yet.";
+          return;
+        }
+
+        button.disabled = true;
+        output.textContent = "Loading books from the live API...";
+
+        try {
+          const response = await fetch(`${apiBase}/books?q=aws`);
+          const data = await response.json();
+          output.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          output.textContent = `Failed to load API response: ${error}`;
+        } finally {
+          button.disabled = false;
+        }
+      }
+
+      button.addEventListener("click", loadBooks);
+    </script>
+  </body>
+</html>

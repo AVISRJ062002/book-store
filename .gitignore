@@ -1,0 +1,16 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+modules/lambda/*.zip
+.deploy-frontend/
+__pycache__/
+*.pyc
+react-storefront/node_modules/
+react-storefront/dist/
